@@ -63,14 +63,22 @@ html:not(.js) .view + .view { margin-top: 4.2em; }
 
 .intro + h2 { margin-top: 3.5em; }
 
+/* Phones: one work per screen, swipe sideways (next one peeks in) */
 .index {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px 20px;
-  margin: 0;
-  padding: 0;
+  grid-auto-flow: column;
+  grid-auto-columns: 82%;
+  gap: 16px;
+  margin: 0 -20px;
+  padding: 0 20px;
   list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 20px;
+  overscroll-behavior-x: contain;
 }
+
+.index li { scroll-snap-align: start; }
 
 .index a { text-decoration: none; }
 .index a i { text-decoration: underline; }
@@ -89,11 +97,12 @@ html:not(.js) .view + .view { margin-top: 4.2em; }
   gap: 32px;
 }
 
-.portrait { margin: 0; max-width: 160px; }
+/* Phones: photo across the full width; desktop: small 160 px square */
+.portrait { margin: 0; }
 
 .portrait img {
-  width: 160px;
-  height: 160px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   filter: grayscale(20%) contrast(105%);
 }
@@ -146,11 +155,43 @@ html:not(.js) .view + .view { margin-top: 4.2em; }
 .piece-text { max-width: 32em; }
 
 @media (min-width: 760px) {
-  .page { padding: 40px 40px 40px; }
+  /* Fit one screen: footer sits at the bottom of the window, spacing kept tight */
+  .page {
+    padding: 28px 40px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
 
-  .top { margin-bottom: 72px; }
+  main { flex: 1; }
 
-  .index { grid-template-columns: repeat(4, 1fr); gap: 20px 32px; }
+  .top { margin-bottom: 40px; }
+
+  .intro { max-width: 40em; }
+
+  .intro + h2 { margin-top: 2.2em; }
+
+  .page h2 { margin-bottom: 1em; }
+
+  .index {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px 32px;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .index img { aspect-ratio: 3 / 2; }
+
+  .cv h2 { margin: 2em 0 0.8em; }
+
+  .text h2 { margin-top: 2.2em; }
+
+  .portrait { max-width: 160px; }
+  .portrait img { width: 160px; height: 160px; }
 
   .bio {
     grid-template-columns: 200px minmax(0, 1fr);
@@ -160,6 +201,7 @@ html:not(.js) .view + .view { margin-top: 4.2em; }
   .foot {
     grid-template-columns: 1fr auto;
     align-items: end;
+    margin-top: 40px;
   }
 
   .foot p:last-child { text-align: right; }
