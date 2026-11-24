@@ -1,9 +1,14 @@
 body {
-  margin: 20px;
-  max-width: 34em;
+  margin: 0;
   background: #fff;
   color: #000;
   font: 15px/1.4 Helvetica, Arial, sans-serif;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
 }
 
 h1, h2 {
@@ -12,29 +17,74 @@ h1, h2 {
   font-weight: normal;
 }
 
-h2 { margin-top: 2.8em; }
-
 p { margin: 0 0 1.4em; }
+p:last-child { margin-bottom: 0; }
 
 a { color: inherit; }
 
-ul.works {
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Image + text side by side (stacked on phones) */
+.piece {
+  display: grid;
+  gap: 24px;
+}
+
+.piece-text { max-width: 32em; }
+
+.home { margin-bottom: 24px; }
+
+/* Works index: small plates */
+.page > h2 { margin-top: 4.2em; }
+
+.index {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px 20px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.contact { margin-top: 2.8em; }
+.index a { text-decoration: none; }
+.index a i { text-decoration: underline; }
 
-.work { max-width: none; }
-.work p { max-width: 34em; }
+.index img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  object-position: left bottom;
+  margin-bottom: 10px;
+}
 
-.plate { max-width: none !important; }
+.closing { margin-top: 4.2em; }
+.closing h2 { margin-top: 0; }
+.closing .piece-image { display: none; }
 
-.plate img {
-  display: block;
-  max-width: 100%;
-  width: auto;
-  height: auto;
-  max-height: 75vh;
+@media (min-width: 760px) {
+  .page { padding: 40px 40px 64px; }
+
+  .piece {
+    grid-template-columns: 2fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  /* Work pages: label sits at the foot of the image, like a wall caption */
+  .work .piece { align-items: end; }
+
+  .work .piece-image img {
+    max-height: calc(100vh - 140px);
+    width: auto;
+  }
+
+  .home { margin-bottom: 40px; }
+
+  .index { grid-template-columns: repeat(4, 1fr); gap: 20px 32px; }
+
+  .closing .piece-image { display: block; }
 }
