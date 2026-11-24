@@ -58,39 +58,6 @@ img {
 /* Without JS every section stays visible, one after another */
 html:not(.js) .view + .view { margin-top: 4.2em; }
 
-/* Works */
-.intro { max-width: 32em; }
-
-.intro + h2 { margin-top: 3.5em; }
-
-/* Phones: one work per screen, swipe sideways (next one peeks in) */
-.index {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 82%;
-  gap: 16px;
-  margin: 0 -20px;
-  padding: 0 20px;
-  list-style: none;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: 20px;
-  overscroll-behavior-x: contain;
-}
-
-.index li { scroll-snap-align: start; }
-
-.index a { text-decoration: none; }
-.index a i { text-decoration: underline; }
-
-.index img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: contain;
-  object-position: left bottom;
-  margin-bottom: 10px;
-}
-
 /* Home: the blurred portrait fills the whole window, click anywhere to enter */
 .home-image { display: block; }
 
@@ -133,10 +100,17 @@ html:not(.js) .view + .view { margin-top: 4.2em; }
 
 .is-home .foot { display: none; }
 
-/* Bio */
+/* Bio: statement, then CV (side by side on desktop) */
+.bio {
+  display: grid;
+  gap: 2.8em;
+}
+
+.statement,
 .cv { max-width: 36em; }
 
 .cv h2 { margin: 2.8em 0 1em; }
+.cv h2:first-child { margin-top: 0; }
 
 .cv table { border-collapse: collapse; }
 
@@ -176,6 +150,26 @@ html:not(.js) .view + .view { margin-top: 4.2em; }
 
 .piece-text { max-width: 32em; }
 
+/* Previous / next work: grey < >. Phones: right under the image.
+   Desktop: pinned to the same spot in the window on every work page,
+   so clicking through never means hunting for the arrow. */
+.pager {
+  display: flex;
+  gap: 16px;
+  margin: 12px 0 0 -12px;
+  font-size: 28px;
+  line-height: 1;
+  color: #949494;
+}
+
+.pager a,
+.pager-gap {
+  padding: 8px 12px;
+  text-decoration: none;
+}
+
+.pager-gap { visibility: hidden; }
+
 @media (min-width: 760px) {
   /* Fit one screen: footer sits at the bottom of the window, spacing kept tight */
   .page {
@@ -191,26 +185,16 @@ html:not(.js) .view + .view { margin-top: 4.2em; }
 
   .top { margin-bottom: 40px; }
 
-  .intro { max-width: 40em; }
-
-  .intro + h2 { margin-top: 2.2em; }
-
   .page h2 { margin-bottom: 1em; }
-
-  .index {
-    grid-auto-flow: row;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px 32px;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-  }
-
-  .index img { aspect-ratio: 3 / 2; }
 
   .cv h2 { margin: 2em 0 0.8em; }
 
   .text h2 { margin-top: 2.2em; }
+
+  .bio {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
 
   /* line up with the page content (max 1200 px, centred) */
   .js .home-caption {
@@ -229,11 +213,18 @@ html:not(.js) .view + .view { margin-top: 4.2em; }
   .piece {
     grid-template-columns: 2fr 1fr;
     gap: 48px;
-    align-items: end;
+    align-items: start;
   }
 
   .piece-image img {
     max-height: calc(100vh - 180px);
     width: auto;
+  }
+
+  .pager {
+    position: fixed;
+    left: calc(max(0px, (100vw - 1200px) / 2) + 40px - 12px);
+    bottom: 16px;
+    margin: 0;
   }
 }

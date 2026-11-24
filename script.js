@@ -1,10 +1,12 @@
 // View switching via URL hash. No hash = home (full-screen portrait);
-// #works, #bio, #manifesto = tabs. No reload, no tracking beyond GoatCounter.
+// #bio, #manifesto = tabs. Works live on their own pages (works/*.html).
+// No reload, no tracking beyond GoatCounter.
 (function () {
-  var views = ["home", "works", "bio", "manifesto"];
+  var views = ["home", "bio", "manifesto"];
 
   function show() {
     var id = location.hash.slice(1);
+    if (id === "works") { location.replace("works/rmc-001.html"); return; } // old links
     if (views.indexOf(id) === -1) id = "home";
     views.forEach(function (v) {
       document.getElementById(v).hidden = v !== id;
