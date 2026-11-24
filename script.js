@@ -1,13 +1,15 @@
-// Tab switching via URL hash (#works, #bio, #manifesto). No reload, no tracking.
+// View switching via URL hash. No hash = home (full-screen portrait);
+// #works, #bio, #manifesto = tabs. No reload, no tracking beyond GoatCounter.
 (function () {
-  var views = ["works", "bio", "manifesto"];
+  var views = ["home", "works", "bio", "manifesto"];
 
   function show() {
     var id = location.hash.slice(1);
-    if (views.indexOf(id) === -1) id = "works";
+    if (views.indexOf(id) === -1) id = "home";
     views.forEach(function (v) {
       document.getElementById(v).hidden = v !== id;
     });
+    document.body.classList.toggle("is-home", id === "home");
     document.querySelectorAll(".top nav a").forEach(function (a) {
       if (a.getAttribute("href") === "#" + id) a.setAttribute("aria-current", "page");
       else a.removeAttribute("aria-current");
@@ -17,7 +19,7 @@
 
   window.addEventListener("hashchange", function () {
     show();
-    // Tabs switch without a reload, so tell GoatCounter about each one.
+    // Views switch without a reload, so tell GoatCounter about each one.
     if (window.goatcounter && window.goatcounter.count) {
       window.goatcounter.count({ path: location.pathname + location.hash });
     }

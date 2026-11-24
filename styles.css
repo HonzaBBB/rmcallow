@@ -1,7 +1,7 @@
 body {
   margin: 0;
   background: #fff;
-  color: #000;
+  color: #444; /* soft dark grey instead of black */
   font: 15px/1.4 Helvetica, Arial, sans-serif;
 }
 
@@ -91,28 +91,49 @@ html:not(.js) .view + .view { margin-top: 4.2em; }
   margin-bottom: 10px;
 }
 
-/* Bio */
-.bio {
-  display: grid;
-  gap: 32px;
-}
+/* Home: the blurred portrait fills the whole window, click anywhere to enter */
+.home-image { display: block; }
 
-/* Phones: photo across the full width; desktop: small 160 px square */
-.portrait { margin: 0; }
-
-.portrait img {
+.home-image img {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+  opacity: 0.75;
   filter: grayscale(20%) contrast(105%);
 }
 
-.portrait figcaption {
+.home-caption {
   margin-top: 8px;
   font-size: 12px;
-  line-height: 1.4;
+  color: #767676;
 }
 
+.js .home {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.js .home-image,
+.js .home-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.js .home-caption {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  margin: 0;
+}
+
+.top {
+  position: relative;
+  z-index: 1;
+}
+
+.is-home .foot { display: none; }
+
+/* Bio */
 .cv { max-width: 36em; }
 
 .cv h2 { margin: 2.8em 0 1em; }
@@ -144,6 +165,7 @@ html:not(.js) .view + .view { margin-top: 4.2em; }
   gap: 1em;
   margin-top: 96px;
   font-size: 12px;
+  color: #767676;
 }
 
 /* Work pages: image + caption side by side */
@@ -190,12 +212,10 @@ html:not(.js) .view + .view { margin-top: 4.2em; }
 
   .text h2 { margin-top: 2.2em; }
 
-  .portrait { max-width: 160px; }
-  .portrait img { width: 160px; height: 160px; }
-
-  .bio {
-    grid-template-columns: 200px minmax(0, 1fr);
-    gap: 48px;
+  /* line up with the page content (max 1200 px, centred) */
+  .js .home-caption {
+    left: calc(max(0px, (100vw - 1200px) / 2) + 40px);
+    bottom: 28px;
   }
 
   .foot {
