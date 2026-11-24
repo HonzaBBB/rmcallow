@@ -15,6 +15,12 @@
     window.scrollTo(0, 0);
   }
 
-  window.addEventListener("hashchange", show);
+  window.addEventListener("hashchange", function () {
+    show();
+    // Tabs switch without a reload, so tell GoatCounter about each one.
+    if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: location.pathname + location.hash });
+    }
+  });
   show();
 })();
