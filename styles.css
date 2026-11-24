@@ -8,7 +8,7 @@ body {
 .page {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 20px 48px;
+  padding: 24px 20px 32px;
 }
 
 h1, h2 {
@@ -28,18 +28,40 @@ img {
   height: auto;
 }
 
-/* Image + text side by side (stacked on phones) */
-.piece {
-  display: grid;
-  gap: 24px;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.piece-text { max-width: 32em; }
+/* Header + tabs */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1em;
+  margin-bottom: 48px;
+}
 
-.home { margin-bottom: 24px; }
+.top a { text-decoration: none; }
 
-/* Works index: small plates */
-.page > h2 { margin-top: 4.2em; }
+.top nav {
+  display: flex;
+  gap: 1.2em;
+}
+
+.top nav a[aria-current="page"] { text-decoration: underline; }
+
+/* Without JS every section stays visible, one after another */
+html:not(.js) .view + .view { margin-top: 4.2em; }
+
+/* Works */
+.intro { max-width: 32em; }
+
+.intro + h2 { margin-top: 3.5em; }
 
 .index {
   display: grid;
@@ -61,30 +83,95 @@ img {
   margin-bottom: 10px;
 }
 
-.closing { margin-top: 4.2em; }
-.closing h2 { margin-top: 0; }
-.closing .piece-image { display: none; }
+/* Bio */
+.bio {
+  display: grid;
+  gap: 32px;
+}
+
+.portrait { margin: 0; max-width: 160px; }
+
+.portrait img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  filter: grayscale(20%) contrast(105%);
+}
+
+.portrait figcaption {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.cv { max-width: 36em; }
+
+.cv h2 { margin: 2.8em 0 1em; }
+
+.cv table { border-collapse: collapse; }
+
+.cv td {
+  padding: 0 0 0.6em;
+  vertical-align: top;
+}
+
+.cv td:first-child { padding-right: 1.6em; }
+
+/* Manifesto */
+.text { max-width: 36em; }
+
+.text ol {
+  margin: 0;
+  padding-left: 1.6em;
+}
+
+.text li { margin-bottom: 0.8em; }
+
+.text h2 { margin-top: 3.5em; }
+
+/* Footer */
+.foot {
+  display: grid;
+  gap: 1em;
+  margin-top: 96px;
+  font-size: 12px;
+}
+
+/* Work pages: image + caption side by side */
+.piece {
+  display: grid;
+  gap: 24px;
+}
+
+.piece-text { max-width: 32em; }
 
 @media (min-width: 760px) {
-  .page { padding: 40px 40px 64px; }
+  .page { padding: 40px 40px 40px; }
+
+  .top { margin-bottom: 72px; }
+
+  .index { grid-template-columns: repeat(4, 1fr); gap: 20px 32px; }
+
+  .bio {
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 48px;
+  }
+
+  .foot {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+
+  .foot p:last-child { text-align: right; }
 
   .piece {
     grid-template-columns: 2fr 1fr;
     gap: 48px;
-    align-items: start;
+    align-items: end;
   }
 
-  /* Work pages: label sits at the foot of the image, like a wall caption */
-  .work .piece { align-items: end; }
-
-  .work .piece-image img {
-    max-height: calc(100vh - 140px);
+  .piece-image img {
+    max-height: calc(100vh - 180px);
     width: auto;
   }
-
-  .home { margin-bottom: 40px; }
-
-  .index { grid-template-columns: repeat(4, 1fr); gap: 20px 32px; }
-
-  .closing .piece-image { display: block; }
 }
